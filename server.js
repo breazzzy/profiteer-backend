@@ -54,7 +54,7 @@ app.post("/stock_info_test", async (req, res) => {
 
 app.post("/stock_info_chart", async (req, res) => {
   //   const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
-  console.log(req.body.sym);
+  console.log("Responding with history for " + req.body.sym);
   const result = await yfinance._chart(req.body.sym, {
     period1: "2022-02-01" /* ... */,
   });
