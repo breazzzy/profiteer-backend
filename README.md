@@ -1,5 +1,7 @@
 # profiteer backend
 
+Backend for profiteer website written with nodeJS and express.
+
 ## Project Setup
 
 ```sh
