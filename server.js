@@ -39,7 +39,6 @@ app.post("/register", (req, res) => {
   console.log(req);
   res.send({
     message: "Yo " + req.body.username + " your user was registered",
-    // message: req.body,
   });
 });
 
@@ -50,39 +49,6 @@ app.post("/stock_info_test", async (req, res) => {
   const result = await yfinance.quote(req.body.sym);
   res.send({
     message: result,
-  });
-});
-
-// const get_stock_info = async (symbol) => {
-//   var promise = () => {
-//     return new Promise((resolve, reject) => {
-//       yfinance.quote(symbol);
-//     });
-//   };
-// };
-
-app.post("/stock_info_test_post", (req, res) => {
-  // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
-  //   const p = getter(req.body.sym);
-  console.log(req.body.sym);
-  res.send({ message: "Hhel " + req.body.sym + " f" });
-  //   const result = await yfinance.quote("GME");
-  //   res.send({
-  //     message: result,
-  //   });
-});
-
-// const getter = async (symbol) => {
-//   var promise = () => {
-//     return new Promise((resolve, reject) => {
-//       yfinance.quote(symbol);
-//     });
-//   };
-// };
-
-app.get("/stock_info", (req, res) => {
-  res.send({
-    message: "hello",
   });
 });
 
