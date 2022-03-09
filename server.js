@@ -8,6 +8,10 @@ const { resolve } = require("path/posix");
 
 const yfinance = require("yahoo-finance2").default;
 
+//USED TO TURN VALIDATION ON/OFF
+const validation = false;
+
+
 app.use(cors());
 
 app.use(bodyParser.json());
@@ -46,7 +50,17 @@ app.post("/stock_info_test", async (req, res) => {
   // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
 
   console.log(req.body.sym);
-  const result = await yfinance.quote(req.body.sym);
+  const result = await yfinance.quote(req.body.sym, {}, {validateResult: validation});
+  res.send({
+    message: result,
+  });
+});
+
+app.get("/test", async (req, res) => {
+  // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
+
+  console.log("Test");
+  const result = await yfinance.quote("AAPL", {}, {validateResult: validation});
   res.send({
     message: result,
   });
@@ -57,7 +71,7 @@ app.post("/stock_info_chart", async (req, res) => {
   console.log("Responding with history for " + req.body.sym);
   const result = await yfinance._chart(req.body.sym, {
     period1: "2022-02-01" /* ... */,
-  });
+  }, {validateResult: validation});
   res.send({
     message: result.quotes,
   });
