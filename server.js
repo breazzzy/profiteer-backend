@@ -3,8 +3,6 @@ const cors = require("cors");
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
-// const morgan = require("morgan");
-const { resolve } = require("path/posix");
 
 const yfinance = require("yahoo-finance2").default;
 
@@ -61,6 +59,16 @@ app.get("/test", async (req, res) => {
 
   console.log("Test");
   const result = await yfinance.quote("AAPL", {}, {validateResult: validation});
+  res.send({
+    message: result,
+  });
+});
+
+app.get("/test_day", async (req, res) => {
+  // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
+  let date = new Date();
+  console.log("Test");
+  const result = await yfinance._chart("AAPL", {period1: "2022-02-09"}, {validateResult: validation});
   res.send({
     message: result,
   });
