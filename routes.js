@@ -1,9 +1,13 @@
 const config = require("./config/config");
 
 const yfinance = require("yahoo-finance2").default;
+
+//Turns off validation for yfinance2 was having a lot of trouble with it. Parameter located in config
 const validation = config.yfin.validation;
 
 const AuthenticationController = require("./controllers/AuthenticationController");
+
+//Collections of all the routes the server can go
 
 module.exports = (app) => {
   app.get("/status", (req, res) => {

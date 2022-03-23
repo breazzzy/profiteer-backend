@@ -4,7 +4,7 @@ module.exports = (sequeilize, DataTypes) => {
     {
       username: {
         type: DataTypes.STRING,
-        unique: true,
+        unique: true, //Must be unique nobody can have the same username as someone else
         allowNull: false,
       },
       password: {

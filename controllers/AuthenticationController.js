@@ -1,5 +1,6 @@
 const User = require("../models/index").User;
 
+//Registration logic
 module.exports = {
   async register(req, res) {
     try {

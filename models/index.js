@@ -4,6 +4,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config/config");
 const db = {};
 
+//Creates sequelize object
 const sequelize = new Sequelize(
   config.db.database,
   config.db.user,
@@ -11,6 +12,7 @@ const sequelize = new Sequelize(
   config.db.options
 );
 
+//Loops through files in models folder and adds them to sequelize
 fs.readdirSync(__dirname)
   .filter((file) => file !== "index.js")
   .forEach((file) => {
@@ -20,6 +22,7 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
+//Exports database
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 module.exports = db;
