@@ -5,10 +5,14 @@ const User = require("../models/index").User;
 module.exports = {
   async login(req, res) {
       const creds = await User.findOne({where: {username: req.body.username} } ).then(user => {return user});
-    //   if(creds != null){
-    //   }
-      res.send({message: "logged in"});
-      console.log(creds);
+      console.log(creds.password + " " + req.body.password);
+      if(creds.password == req.body.password){
+        res.send({message: `${creds.username} logged in`, success: true} );
+        console.log("successful login")
+      }else{
+        res.send({message: `Wrong Password`,success: false});
+          console.log("wrong password")
+      }
     // try {
     //   console.log(req.body);
     //   const user = await User.create(req.body);
