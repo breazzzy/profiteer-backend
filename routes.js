@@ -6,7 +6,7 @@ const yfinance = require("yahoo-finance2").default;
 const validation = config.yfin.validation;
 
 const AuthenticationController = require("./controllers/AuthenticationController");
-const LoginController = require("./controllers/LoginController");
+// const LoginController = require("./controllers/LoginController");
 
 //Collections of all the routes the server can go
 
@@ -18,7 +18,7 @@ module.exports = (app) => {
   });
 
   app.post("/register", AuthenticationController.register);
-  app.post("/login", LoginController.login)
+  app.post("/login", AuthenticationController.login);
 
   app.post("/stock_info_test", async (req, res) => {
     // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };

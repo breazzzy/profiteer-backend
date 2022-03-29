@@ -15,4 +15,32 @@ module.exports = {
       });
     }
   },
+  async login(req, res) {
+    try {
+      const { username, password } = req.body;
+      console.log(username);
+      const user = await User.findOne({
+        where: { username: username },
+      });
+      if (!user) {
+        return res.status(403).send({
+          error: "Login not found",
+        });
+      }
+      console.log(user.toJSON());
+      const isPasswordValid = password === user.password;
+      if (!isPasswordValid) {
+        return res.status(403).send({
+          error: "Login not found",
+        });
+      }
+      res.send({
+        user: user.toJSON(),
+      });
+    } catch (err) {
+      res.status(500).send({
+        error: "An error has occured",
+      });
+    }
+  },
 };

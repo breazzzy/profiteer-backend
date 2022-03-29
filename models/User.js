@@ -16,5 +16,6 @@ module.exports = (sequeilize, DataTypes) => {
       modelName: "User",
     }
   );
+
   return User;
 };
