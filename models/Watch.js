@@ -5,10 +5,12 @@ module.exports = (sequeilize, DataTypes) => {
       stockTicker: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: "watchComposite",
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: "watchComposite",
       },
     },
     {
