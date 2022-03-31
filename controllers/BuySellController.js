@@ -1,10 +1,10 @@
-const { watch } = require("fs");
-
 const User = require("../models/index").User;
 const Watch = require("../models/index").Watch;
+const Buy = require("../models/index").Buy;
 
 //Registration logic
 module.exports = {
+  //Watches
   async addToWatch(req, res) {
     try {
       // console.log(req.body.data);
@@ -23,48 +23,26 @@ module.exports = {
       console.log(watch);
       res.send(watch);
     } catch (error) {
-      console.log(error);
+      console.log("ERROR: " + error);
     }
   },
-  //   async register(req, res) {
-  //     try {
-  //       console.log(req.body);
-  //       const user = await User.create(req.body);
-  //       console.log(user.toJSON());
-  //       res.send(user.toJSON());
-  //     } catch (err) {
-  //       console.log("This username is allready in use");
-  //       res.status(400).send({
-  //         error: "This username is allready in use",
-  //       });
-  //     }
-  //   },
-  //   async login(req, res) {
-  //     try {
-  //       const { username, password } = req.body;
-  //       console.log(username);
-  //       const user = await User.findOne({
-  //         where: { username: username },
-  //       });
-  //       if (!user) {
-  //         return res.status(403).send({
-  //           error: "Login not found",
-  //         });
-  //       }
-  //       console.log(user.toJSON());
-  //       const isPasswordValid = password === user.password;
-  //       if (!isPasswordValid) {
-  //         return res.status(403).send({
-  //           error: "Login not found",
-  //         });
-  //       }
-  //       res.send({
-  //         user: user.toJSON(),
-  //       });
-  //     } catch (err) {
-  //       res.status(500).send({
-  //         error: "An error has occured",
-  //       });
-  //     }
-  //   },
+  //Buys
+  async addToBuy(req, res) {
+    try {
+      const buy = await Buy.create(req.body.data);
+      res.send(buy);
+    } catch (err) {
+      console.log("ERROR: " + err);
+    }
+  },
+  async getBuys(req, res) {
+    try {
+      const { username } = req.body;
+      const buys = await Buy.findAll({ where: { username: username } });
+      console.log(buys);
+      res.send(buys);
+    } catch (err) {
+      console.log("ERROR: " + err);
+    }
+  },
 };
