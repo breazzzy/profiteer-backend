@@ -7,12 +7,12 @@ const Watch = require("../models/index").Watch;
 module.exports = {
   async addToWatch(req, res) {
     try {
-      console.log(req.body.data);
+      // console.log(req.body.data);
       const watch = await Watch.create(req.body.data);
-      console.log(watch.toJSON());
+      // console.log(watch.toJSON());
       res.send(watch.toJSON());
     } catch (err) {
-      console.log(err);
+      console.log("ERROR: " + err.message);
     }
   },
   async getWatches(req, res) {
