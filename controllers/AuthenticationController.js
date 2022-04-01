@@ -15,6 +15,19 @@ module.exports = {
       });
     }
   },
+  async get_balance(req, res) {
+    try {
+      const { username } = req.body;
+      const balance = (
+        await User.findOne({
+          where: { username: username },
+        })
+      ).balance;
+      res.send({ balance });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   async login(req, res) {
     try {
       const { username, password } = req.body;

@@ -1,29 +1,39 @@
+const { create } = require("domain");
+
 const User = require("../models/index").User;
 const Watch = require("../models/index").Watch;
 const Buy = require("../models/index").Buy;
+const Sell = require("../models/index").Sell;
+const yfinance = require("yahoo-finance2").default;
 
 //Registration logic
 module.exports = {
   //Watches
   async addToWatch(req, res) {
     try {
-      // console.log(req.body.data);
-      const watch = await Watch.create(req.body.data);
+      console.log(req.body.data);
+      const watch = await Watch.create({
+        stockTicker: req.body.data.stockTicker,
+        username: req.body.data.username,
+      });
       // console.log(watch.toJSON());
       res.send(watch.toJSON());
     } catch (err) {
-      console.log("ERROR: " + err.message);
+      res.send("Stock allready on list");
+      console.log("ERROR: " + err);
     }
   },
   async getWatches(req, res) {
     try {
-      console.log(req.body);
+      console.log("GET WATCHES " + req.body);
       const { username } = req.body;
+      console.log("USERNAME " + username);
       const watch = await Watch.findAll({ where: { username: username } });
       console.log(watch);
       res.send(watch);
     } catch (error) {
-      console.log("ERROR: " + error);
+      res.send(error);
+      console.log("ERROR ON GET WATCHES : " + error);
     }
   },
   //Buys
@@ -39,10 +49,59 @@ module.exports = {
     try {
       const { username } = req.body;
       const buys = await Buy.findAll({ where: { username: username } });
-      console.log(buys);
+      // console.log(buys);
       res.send(buys);
     } catch (err) {
       console.log("ERROR: " + err);
+    }
+  },
+  //Sells
+  async sellStock(req, res) {
+    console.log("SELL REQUEST");
+    console.log(req.body.data);
+    const { username, stockTicker, createdAt, amountBought, priceAtBuy } =
+      req.body.data;
+    //First we will find the buy
+    try {
+      const original_buy = await Buy.findOne({
+        where: { username: username, createdAt: createdAt },
+      });
+      console.log("Buy found " + original_buy);
+      //Create sell in database
+      const quote = await yfinance.quote(
+        req.body.data.stockTicker,
+        {},
+        { validateResult: false }
+      );
+      const { regularMarketPrice } = quote; //This is the current price
+      // console.log("Current price " + regularMarketPrice);
+
+      const sell = await Sell.create({
+        stockTicker: stockTicker,
+        username: username,
+        priceAtSell: regularMarketPrice,
+        priceAtBuy: priceAtBuy,
+        amountSold: amountBought,
+      });
+      //Find profit
+      const profit = priceAtBuy - regularMarketPrice;
+      console.log(
+        "Profit = " + priceAtBuy + " - " + regularMarketPrice + " = " + profit
+      );
+      //Add profit to balance of user
+      const user = await User.findOne({ wher: { username: username } });
+      user.balance = user.balance + profit;
+      await user.save();
+      //Delete original buy
+      await Buy.destroy({
+        where: {
+          createdAt: createdAt,
+        },
+      });
+      //return profit to client and add it to user account in database
+      res.send({ profit });
+    } catch (error) {
+      console.log(error);
     }
   },
 };

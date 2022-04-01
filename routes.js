@@ -23,8 +23,10 @@ module.exports = (app) => {
   app.post("/get_watch", BuySellController.getWatches);
   app.post("/buy", BuySellController.addToBuy);
   app.post("/get_buys", BuySellController.getBuys);
+  app.post("/sell", BuySellController.sellStock);
+  app.post("/balance", AuthenticationController.get_balance);
 
-  app.post("/stock_info_test", async (req, res) => {
+  app.post("/stock_info", async (req, res) => {
     // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
 
     console.log(req.body.sym);

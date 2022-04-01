@@ -11,6 +11,10 @@ module.exports = (sequeilize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      balance: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+      },
     },
     {
       modelName: "User",
