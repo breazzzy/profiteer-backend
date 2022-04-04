@@ -1,15 +1,24 @@
 const User = require("../models/index").User;
 
+var crypto = require("crypto-js");
+
 //Registration logic
 module.exports = {
   async register(req, res) {
     try {
-      console.log(req.body);
-      const user = await User.create(req.body);
+      // console.log(req.body);
+      const { username, password } = req.body;
+      const encrypted = crypto.SHA256(password, "key").toString();
+      console.log("Encrypterino + " + encrypted);
+      const user = await User.create({
+        username: username,
+        password: encrypted,
+        balance: 0,
+      });
       console.log(user.toJSON());
       res.send(user.toJSON());
     } catch (err) {
-      console.log("This username is allready in use");
+      console.log(err);
       res.status(400).send({
         error: "This username is allready in use",
       });
@@ -31,7 +40,8 @@ module.exports = {
   async login(req, res) {
     try {
       const { username, password } = req.body;
-      console.log(username);
+      // console.log("ENCRYPTION __ _ __ _ + " + crypto.SHA256(password, "key"));
+
       const user = await User.findOne({
         where: { username: username },
       });
@@ -40,8 +50,9 @@ module.exports = {
           error: "Login not found",
         });
       }
-      console.log(user.toJSON());
-      const isPasswordValid = password === user.password;
+      const encrypted = crypto.SHA256(password, "key").toString();
+      // console.log(user.toJSON());
+      const isPasswordValid = user.password === encrypted;
       if (!isPasswordValid) {
         return res.status(403).send({
           error: "Login not found",
@@ -51,6 +62,7 @@ module.exports = {
         user: user.toJSON(),
       });
     } catch (err) {
+      console.log(err);
       res.status(500).send({
         error: "An error has occured",
       });

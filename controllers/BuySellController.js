@@ -6,6 +6,8 @@ const Buy = require("../models/index").Buy;
 const Sell = require("../models/index").Sell;
 const yfinance = require("yahoo-finance2").default;
 
+const config = require("../config/config");
+
 //Registration logic
 module.exports = {
   //Watches
@@ -71,7 +73,7 @@ module.exports = {
       const quote = await yfinance.quote(
         req.body.data.stockTicker,
         {},
-        { validateResult: false }
+        { validateResult: config.yfin.validation }
       );
       const { regularMarketPrice } = quote; //This is the current price
       // console.log("Current price " + regularMarketPrice);

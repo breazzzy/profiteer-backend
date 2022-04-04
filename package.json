@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
     "express": "^4.17.3",
     "morgan": "^1.10.0",
     "sequelize": "^6.17.0",
