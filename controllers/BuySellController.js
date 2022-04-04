@@ -11,7 +11,7 @@ module.exports = {
   //Watches
   async addToWatch(req, res) {
     try {
-      console.log(req.body.data);
+      // console.log(req.body.data);
       const watch = await Watch.create({
         stockTicker: req.body.data.stockTicker,
         username: req.body.data.username,
@@ -25,11 +25,11 @@ module.exports = {
   },
   async getWatches(req, res) {
     try {
-      console.log("GET WATCHES " + req.body);
+      // console.log("GET WATCHES " + req.body);
       const { username } = req.body;
-      console.log("USERNAME " + username);
+      // console.log("USERNAME " + username);
       const watch = await Watch.findAll({ where: { username: username } });
-      console.log(watch);
+      // console.log(watch);
       res.send(watch);
     } catch (error) {
       res.send(error);
@@ -66,7 +66,7 @@ module.exports = {
       const original_buy = await Buy.findOne({
         where: { username: username, createdAt: createdAt },
       });
-      console.log("Buy found " + original_buy);
+      // console.log("Buy found " + original_buy);
       //Create sell in database
       const quote = await yfinance.quote(
         req.body.data.stockTicker,
@@ -84,12 +84,12 @@ module.exports = {
         amountSold: amountBought,
       });
       //Find profit
-      const profit = priceAtBuy - regularMarketPrice;
+      const profit = (regularMarketPrice - priceAtBuy) * amountBought;
       console.log(
         "Profit = " + priceAtBuy + " - " + regularMarketPrice + " = " + profit
       );
       //Add profit to balance of user
-      const user = await User.findOne({ wher: { username: username } });
+      const user = await User.findOne({ where: { username: username } });
       user.balance = user.balance + profit;
       await user.save();
       //Delete original buy
