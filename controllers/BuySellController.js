@@ -102,7 +102,7 @@ module.exports = {
         },
       });
       //return profit to client and add it to user account in database
-      res.send({ profit });
+      res.send({ profit, priceAtBuy, regularMarketPrice, amountBought });
     } catch (error) {
       console.log(error);
     }
