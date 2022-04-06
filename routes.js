@@ -7,6 +7,7 @@ const validation = config.yfin.validation;
 
 const AuthenticationController = require("./controllers/AuthenticationController");
 const BuySellController = require("./controllers/BuySellController");
+const isAuthenticated = require("./Policies/isAuthenticated");
 
 //Collections of all the routes the server can go
 
@@ -19,12 +20,12 @@ module.exports = (app) => {
 
   app.post("/register", AuthenticationController.register);
   app.post("/login", AuthenticationController.login);
-  app.post("/watch", BuySellController.addToWatch);
-  app.post("/get_watch", BuySellController.getWatches);
-  app.post("/buy", BuySellController.addToBuy);
-  app.post("/get_buys", BuySellController.getBuys);
-  app.post("/sell", BuySellController.sellStock);
-  app.post("/balance", AuthenticationController.get_balance);
+  app.post("/watch", isAuthenticated, BuySellController.addToWatch);
+  app.post("/get_watch", isAuthenticated, BuySellController.getWatches);
+  app.post("/buy", isAuthenticated, BuySellController.addToBuy);
+  app.post("/get_buys", isAuthenticated, BuySellController.getBuys);
+  app.post("/sell", isAuthenticated, BuySellController.sellStock);
+  app.post("/balance", isAuthenticated, AuthenticationController.get_balance);
 
   app.post("/stock_info", async (req, res) => {
     // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };

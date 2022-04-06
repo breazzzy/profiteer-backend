@@ -13,4 +13,7 @@ module.exports = {
   yfin: {
     validation: false,
   },
+  authentication: {
+    jwtKey: "JWTKEYFORPROFITEER",
+  },
 };

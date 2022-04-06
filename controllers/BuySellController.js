@@ -28,7 +28,7 @@ module.exports = {
   async getWatches(req, res) {
     try {
       // console.log("GET WATCHES " + req.body);
-      const { username } = req.body;
+      const { username } = req.user;
       // console.log("USERNAME " + username);
       const watch = await Watch.findAll({ where: { username: username } });
       // console.log(watch);
@@ -44,12 +44,13 @@ module.exports = {
       const buy = await Buy.create(req.body.data);
       res.send(buy);
     } catch (err) {
+      res.send(err);
       console.log("ERROR: " + err);
     }
   },
   async getBuys(req, res) {
     try {
-      const { username } = req.body;
+      const { username } = req.user;
       const buys = await Buy.findAll({ where: { username: username } });
       // console.log(buys);
       res.send(buys);

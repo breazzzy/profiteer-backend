@@ -1,6 +1,15 @@
 const User = require("../models/index").User;
+const config = require("../config/config");
 
+const jwt = require("jsonwebtoken");
 var crypto = require("crypto-js");
+
+function jwtSignUser(user) {
+  const ONE_WEEK = 60 * 60 * 24 * 7;
+  return jwt.sign(user, config.authentication.jwtKey, {
+    expiresIn: ONE_WEEK,
+  });
+}
 
 //Registration logic
 module.exports = {
@@ -26,7 +35,7 @@ module.exports = {
   },
   async get_balance(req, res) {
     try {
-      const { username } = req.body;
+      const { username } = req.user;
       const balance = (
         await User.findOne({
           where: { username: username },
@@ -60,6 +69,7 @@ module.exports = {
       }
       res.send({
         user: user.toJSON(),
+        token: jwtSignUser(user.toJSON()),
       });
     } catch (err) {
       console.log(err);
