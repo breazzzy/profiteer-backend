@@ -107,4 +107,17 @@ module.exports = {
       console.log(error);
     }
   },
+  async getDescription(req, res) {
+    try {
+      console.log(req.body);
+      const desc = await yfinance.quoteSummary(req.body.sym, {
+        modules: ["assetProfile"],
+        // validateResult: config.yfin.validation,
+      });
+      res.send(desc.assetProfile.longBusinessSummary);
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  },
 };

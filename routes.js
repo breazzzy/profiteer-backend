@@ -26,6 +26,7 @@ module.exports = (app) => {
   app.post("/get_buys", isAuthenticated, BuySellController.getBuys);
   app.post("/sell", isAuthenticated, BuySellController.sellStock);
   app.post("/balance", isAuthenticated, AuthenticationController.get_balance);
+  app.post("/desc", BuySellController.getDescription);
 
   app.post("/stock_info", async (req, res) => {
     // const queryOptions = { lang: "en-US", reportsCount: 2, region: "US" };
@@ -52,7 +53,9 @@ module.exports = (app) => {
       const result = await yfinance._chart(
         req.body.sym,
         {
-          period1: "2022-02-01" /* ... */,
+          //This is how far back we go to get data
+          // period1: "2022-02-01" /* ... */,
+          period1: req.body.period,
         },
         { validateResult: validation }
       );
