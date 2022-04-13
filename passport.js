@@ -7,6 +7,9 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const config = require("./config/config");
 
 console.log("passport strategy loading...");
+// This creates a JWT strategy that assures the user requesting data is authenticated
+// If the users JWT is valid it returns the users database entry and passes it to the next funciton in the route
+//This function is called for every request, only routes that called the isAuthenticated function will use the user (or error) returned here
 passport.use(
   new JwtStrategy(
     {
@@ -15,8 +18,6 @@ passport.use(
     },
     async function (jwtPayload, done) {
       try {
-        // console.log("JWT PAYLOAD " + jwtPayload);
-        // console.log(jwtPayload);
         const user = await User.findOne({
           where: {
             username: jwtPayload.username,
@@ -26,7 +27,6 @@ passport.use(
           return done(new Error("Token Not Valid"), false);
         }
         return done(null, user);
-        // console.log(user.toJSON());
       } catch (error) {
         return done(new Error("Token Not Valid"), false);
       }

@@ -5,7 +5,8 @@ const jwt = require("jsonwebtoken");
 var crypto = require("crypto-js");
 
 function jwtSignUser(user) {
-  const ONE_WEEK = 60 * 60 * 24 * 7;
+  const ONE_WEEK = 60 * 60 * 24 * 7; //Seconds in a week
+  //How long untill key expires
   return jwt.sign(user, config.authentication.jwtKey, {
     expiresIn: ONE_WEEK,
   });
@@ -49,7 +50,6 @@ module.exports = {
   async login(req, res) {
     try {
       const { username, password } = req.body;
-      // console.log("ENCRYPTION __ _ __ _ + " + crypto.SHA256(password, "key"));
 
       const user = await User.findOne({
         where: { username: username },
@@ -60,7 +60,6 @@ module.exports = {
         });
       }
       const encrypted = crypto.SHA256(password, "key").toString();
-      // console.log(user.toJSON());
       const isPasswordValid = user.password === encrypted;
       if (!isPasswordValid) {
         return res.status(403).send({
