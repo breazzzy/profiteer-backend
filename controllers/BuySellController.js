@@ -114,7 +114,7 @@ module.exports = {
         modules: ["assetProfile"],
         // validateResult: config.yfin.validation,
       });
-      res.send(desc.assetProfile.longBusinessSummary);
+      res.send(desc.assetProfile);
     } catch (error) {
       console.log(error);
       res.send(error);
