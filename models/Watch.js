@@ -1,3 +1,4 @@
+//Model for watch data entry.
 module.exports = (sequeilize, DataTypes) => {
   const Watch = sequeilize.define(
     "Watch",

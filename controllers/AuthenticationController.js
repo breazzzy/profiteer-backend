@@ -4,12 +4,11 @@ const config = require("../config/config");
 const jwt = require("jsonwebtoken");
 var crypto = require("crypto-js");
 
+//Creates a Json Web Token for the current user
 function jwtSignUser(user) {
-  const ONE_WEEK = 60 * 60 * 24 * 7; //Seconds in a week
-  //How long untill key expires
-  return jwt.sign(user, config.authentication.jwtKey, {
-    expiresIn: ONE_WEEK,
-  });
+  //Usually jwts would expire, but for the purposes of this project I didnt add an
+  //expiration time.
+  return jwt.sign(user, config.authentication.jwtKey, {});
 }
 
 //Registration logic

@@ -1,8 +1,8 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("fs"); //Node file system module
+const path = require("path"); //Node path module
 const { Sequelize, DataTypes } = require("sequelize");
 const config = require("../config/config");
-const db = {};
+const db = {}; //Database object
 
 //Creates sequelize object
 const sequelize = new Sequelize(

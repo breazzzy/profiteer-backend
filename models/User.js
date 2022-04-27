@@ -1,3 +1,4 @@
+//Model for user
 module.exports = (sequeilize, DataTypes) => {
   const User = sequeilize.define(
     "User",

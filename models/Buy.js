@@ -1,3 +1,4 @@
+// Model for user buy entries
 module.exports = (sequeilize, DataTypes) => {
   const Buy = sequeilize.define(
     "Buy",

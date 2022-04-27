@@ -1,3 +1,4 @@
+//Model for sell data
 module.exports = (sequeilize, DataTypes) => {
   const Sell = sequeilize.define(
     "Sell",
