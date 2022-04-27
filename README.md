@@ -3,10 +3,12 @@
 Backend for profiteer website written with nodeJS and express.
 
 File Layout
--Config - config file
--Controllers - JS files holding functions for routes.
--Models - index.js creates the database, each "model".js holds the model for database entries.
--Policies - isAuthenticaed.js is used to authenticate users using JWT
+- Config - config file
+- Controllers - JS files holding functions for routes.
+- Models - index.js creates the database, each "model".js holds the model for database entries.
+- Policies - isAuthenticaed.js is used to authenticate users using JWT
+Modules Used
+
 
 ## Project Setup
 
