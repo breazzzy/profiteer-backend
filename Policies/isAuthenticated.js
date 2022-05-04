@@ -7,12 +7,13 @@ const passport = require("passport");
 module.exports = isAuthenticated = function (req, res, next) {
   passport.authenticate("jwt", function (err, user) {
     if (err || !user) {
-      
-      res.status(403).send("User could not be authenticaed, please log out and back in");
+      res
+        .status(403)
+        .send("User could not be authenticaed, please log out and back in");
     } else {
       console.log("TOKEN WAS AUTHENTICATED");
       req.user = user;
-      next();//Pass over to next funciton in route.
+      next(); //Pass over to next funciton in route.
     }
   })(req, res, next);
 };

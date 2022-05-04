@@ -18,6 +18,7 @@ module.exports = (app) => {
     });
   });
 
+  //Any post with an isAuthenticated function passed in is one where a login is required in order to access.
   app.post("/register", AuthenticationController.register);
   app.post("/login", AuthenticationController.login);
   app.post("/watch", isAuthenticated, BuySellController.addToWatch);

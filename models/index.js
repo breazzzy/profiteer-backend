@@ -1,6 +1,11 @@
+/*
+  This index.js creates and loads the models and database.
+  This other files in this folder are models.
+*/
+
 const fs = require("fs"); //Node file system module
 const path = require("path"); //Node path module
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize"); //Sequelize
 const config = require("../config/config");
 const db = {}; //Database object
 
