@@ -38,12 +38,17 @@ module.exports = (app) => {
         {},
         { validateResult: validation }
       );
+      console.log("result for stock info = " + result);
+      if (!result) {
+        throw "undefined";
+      }
       res.send({
         message: result,
       });
     } catch (error) {
-      res.send(error);
-      console.log(error);
+      res.status(400).send("Search not found");
+
+      console.log("ERROR Search not found");
     }
   });
 
@@ -64,8 +69,9 @@ module.exports = (app) => {
         message: result.quotes,
       });
     } catch (error) {
-      console.log(error);
-      res.send(error);
+      res.status(400).send("Search not found");
+
+      console.log("ERROR Search not found");
     }
   });
 };
