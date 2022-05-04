@@ -1,7 +1,7 @@
 const passport = require("passport");
 
 //Function called to check token being received
-// If the funciton defined in passport.js returns a user the user paramenter here will equal that
+// If the funciton defined in passport.js returns a user, the user paramenter here will equal that
 //It will then pass over to the next function in the route
 // If the passport.js function returns a error or a null user this function returns an error aswell
 module.exports = isAuthenticated = function (req, res, next) {
